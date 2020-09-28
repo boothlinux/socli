@@ -150,7 +150,7 @@ def get_stats(soup):
     :return: tuple of (question_title, question_desc, question_stats, dup_url)
     """
     question_title = (soup.find_all("a", class_="question-hyperlink")[0].get_text())
-    question_stats = (soup.find_all("div", class_="js-vote-count")[0].get_text())
+    #question_stats = (soup.find_all("div", class_="question-summary")[0].get_text())
     dup_url = None
     try:
 
@@ -160,9 +160,9 @@ def get_stats(soup):
         question_stats = "Votes " + question_stats + " | " + asked_info + " | " + active_info + " | " + viewed_info
     except:
         question_stats = "Could not load statistics."
-    question_desc = (soup.find_all("div", class_="js-post-body")[0])
+    question_desc = (soup.find_all("div", class_="question-summary")[0])
     if '[duplicate]' in question_title:
-        dup_answer = (soup.find_all("div", class_="js-post-body")[0])
+        dup_answer = (soup.find_all("div", class_="question-summary")[0])
         link = dup_answer.find('a')['href']
         link = so_url + link
         dup_url = copy.deepcopy(link)

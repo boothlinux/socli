@@ -443,17 +443,30 @@ def main():
         print('Socli ' + __version__)
         sys.exit(0)
 
-    if namespace.browse:
-        # Browse mode
-        search.google_search = False
+    if namespace.browse:                                    # Browse mode
+        if query_tag == 'homepage' or 'hp':                 # Display the homepage if the argument is added
+            import webbrowser
+            open_in_browser = True
+            display_condition = True
+            url_to_use = 'https://stackoverflow.com/questions'
+            try:
+                requests.get(url_to_use)
+            except Exception:
+                printer.print_warning(
+                    "Error, could be:\n- invalid url\n- url cannot be opened in socli\n- internet connection error")
+            display_results(url_to_use)
+            print('open')
+            
+            print('Bye, Bob!')
+            return
+        search.google_search = False                           # Otherwise browse with optional query tag
         socli_browse_interactive(query_tag)
-    elif namespace.query != [] or namespace.tag is not None:  # If query and tag are not both empty
+    elif namespace.query != [] or namespace.tag is not None:   # If query and tag are not both empty
         if namespace.interactive:
             search.socli_interactive(query)
-        elif namespace.homepage:
-
         else:
             socli(query)
+
     elif query not in [' ', ''] and not (
             namespace.tag or namespace.res or namespace.interactive or namespace.browse):  # If there are no flags
         socli(query)
