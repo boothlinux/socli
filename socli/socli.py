@@ -294,9 +294,7 @@ def socli_browse_interactive(query_tag):
         if search.google_search:
             questions = search.get_questions_for_query_google(query)
         else:
-            # print('hurr')
             questions = search.get_questions_for_query(query_tag)
-            # print(questions)
 
         question_page = SelectQuestionPage(questions)
 
@@ -310,7 +308,6 @@ def socli_browse_interactive(query_tag):
         printer.print_fail("Please check your internet connectivity...")
     except Exception as e:
         printer.showerror(e)
-        # print("Hurra")
         print("exiting...")
         sys.exit(0)
 
@@ -453,6 +450,8 @@ def main():
     elif namespace.query != [] or namespace.tag is not None:  # If query and tag are not both empty
         if namespace.interactive:
             search.socli_interactive(query)
+        elif namespace.homepage:
+
         else:
             socli(query)
     elif query not in [' ', ''] and not (
